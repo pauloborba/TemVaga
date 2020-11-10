@@ -1,3 +1,5 @@
+import { Grade } from './grade';
+
 export class User {
   cpf: string;
   name: string;
@@ -6,6 +8,7 @@ export class User {
   email: string;
   password: string;
   carLicensePlate: string;
+  grade: Grade;
 
   constructor() {
     this.clean();
@@ -19,6 +22,8 @@ export class User {
     this.email = '';
     this.password = '';
     this.carLicensePlate = '';
+    // Base grade for new user
+    this.grade = new Grade({ average: 5, evaluationQtt: 1 });
   }
 
   clone(): User {
@@ -35,5 +40,6 @@ export class User {
     this.email = from.email;
     this.password = from.password;
     this.carLicensePlate = from.carLicensePlate;
+    this.grade = new Grade(from.grade);
   }
 }
