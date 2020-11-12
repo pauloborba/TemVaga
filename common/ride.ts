@@ -1,34 +1,32 @@
 import {v4 as uuid} from 'uuid';
+import User from './user';
 import Route from './route';
 import Seats from './seats';
-import Sears from './seats';
 
 interface IRide{
-    id: string;
-    driverCpf: string;
     price: number;
+    places: number;
     isPrivate: boolean;
     departureTime: Date;
-    route: Route;
-    seats: Seats;
 }
 
 export default class ride{
     id: string;
-    driverCpf: string;
+    driver: User;
     price: number;
     isPrivate: boolean;
     departureTime: Date;
     route: Route;
     seats: Seats;
 
-    constructor(driverCpf: string, price: number, isPrivate: boolean, departureTime: Date){
+    constructor(driver: User, {price, places, isPrivate, departureTime}: IRide){
         this.id = uuid();
+        this.driver = driver.clone();
         this.price = price;
+        this.route = new Route();
+        this.seats = new Seats(places);
         this.isPrivate = isPrivate;
         this.departureTime = departureTime;
-        this.route = new Route();
-        this.seats = new Seats(4);
     }
 
     changePrivacy(){
