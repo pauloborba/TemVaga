@@ -23,7 +23,16 @@ export class UserRegister {
     return result;
   }
 
+  getUser(cpf: string): User {
+    var result: User = this.users.find(u => u.cpf == cpf);
+    return result;
+  }
+  //TODO: Implement getUsers
   getUsers(): User[] {
+    return;
+  }
+
+  getAllUsers(): User[] {
     return this.users;
   }
 
