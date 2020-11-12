@@ -1,4 +1,4 @@
-import Ride from '../../common/ride';
+import Ride from '../../common/src/Ride/ride';
 import Route from '../../common/route';
 
 export class RideRegister {

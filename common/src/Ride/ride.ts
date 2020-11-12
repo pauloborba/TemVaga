@@ -1,5 +1,5 @@
 import {v4 as uuid} from 'uuid';
-import User from './user';
+import User from '../User/user';
 import Route from './route';
 import Seats from './seats';
 

@@ -1,4 +1,4 @@
-import Car from '../../common/car';
+import Car from '../../common/src/Car/car';
 
 export class CarRegister {
   cars: Car[] = [];
