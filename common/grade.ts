@@ -11,7 +11,7 @@ export default class Grade {
     this.average = from.average;
     this.evaluationQtt = from.evaluationQtt;
   }
-
+  // TODO: Round average
   incrementGrade(newValue: number): number {
     const oldQtt = this.evaluationQtt;
 
@@ -23,8 +23,8 @@ export default class Grade {
   }
 
   clampGrade(toClamp, min, max): number {
-    // If clamp is less than min, return min
-    // If clamp is greather than max, return max
+    // If toClamp is less than min, return min
+    // If toClamp is greather than max, return max
     return toClamp <= min ? min : toClamp >= max ? max : toClamp;
   }
 }

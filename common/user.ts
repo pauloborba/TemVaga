@@ -42,4 +42,9 @@ export default class User {
     this.carLicensePlate = from.carLicensePlate;
     this.grade = new Grade(from.grade);
   }
+
+  evaluate(evaluationValue: number): number {
+    this.grade.incrementGrade(evaluationValue);
+    return this.grade.average;
+  }
 }
