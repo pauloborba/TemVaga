@@ -1,4 +1,4 @@
-import User from '../../common/user';
+import User from '../../common/src/User/user';
 
 export class UserRegister {
   users: User[] = [];
