@@ -3,7 +3,7 @@ interface IGrade {
   evaluationQtt: number;
 }
 
-export class Grade {
+export default class Grade {
   average: number;
   evaluationQtt: number;
 

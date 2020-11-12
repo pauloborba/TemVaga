@@ -1,4 +1,4 @@
-export class Car {
+export default class Car {
   licensePlate: string;
   color: string;
   brand: string;

@@ -1,6 +1,6 @@
-import { Grade } from './grade';
+import Grade from './grade';
 
-export class User {
+export default class User {
   cpf: string;
   name: string;
   photo: string;
