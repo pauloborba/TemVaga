@@ -28,11 +28,11 @@ export class CarRegister {
   }
 
   delete(licensePlate: string): boolean {
-    var position: number = this.cars.findIndex(
+    var index: number = this.cars.findIndex(
       c => c.licensePlate == licensePlate
     );
-    if (position === -1) false;
-    this.cars.splice(position, 1);
+    if (index === -1) false;
+    this.cars.splice(index, 1);
     return true;
   }
 }
