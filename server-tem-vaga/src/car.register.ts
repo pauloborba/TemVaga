@@ -23,7 +23,17 @@ export class CarRegister {
     return result;
   }
 
-  getCars(): Car[] {
+  getCar(licensePlate: string): Car {
+    var result: Car = this.cars.find(u => u.licensePlate == licensePlate);
+    return result;
+  }
+
+  //TODO: Implement getCars
+  getCars(licensePlates: string[]): Car[] {
+    return;
+  }
+
+  getAllCars(): Car[] {
     return this.cars;
   }
 
