@@ -16,6 +16,8 @@ tvserver.use(bodyParser.json());
 
 tvserver.use('/userApi', require('./src/routes/user.api'));
 
+tvserver.use('/carApi', require('./src/routes/car.api'));
+
 // tvserver.get('/alunos', function (req: express.Request, res: express.Response) {
 //   res.send(JSON.stringify(cadastro.getAlunos()));
 // })

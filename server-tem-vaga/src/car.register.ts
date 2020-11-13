@@ -1,6 +1,6 @@
 import Car from '../../common/src/Car/car';
 
-export class CarRegister {
+export default class CarRegister {
   cars: Car[] = [];
 
   register(car: Car): Car {
