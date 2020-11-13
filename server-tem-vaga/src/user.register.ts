@@ -35,12 +35,11 @@ export default class UserRegister {
   getAllUsers(): User[] {
     return this.users;
   }
-
-  delete(cpf: string): boolean {
+  //Maybe return index
+  delete(cpf: string): number {
     var index: number = this.users.findIndex(u => u.cpf == cpf);
-    if (index === -1) false;
-    this.users.splice(index, 1);
-    return true;
+    if (index !== -1) this.users.splice(index, 1);
+    return index;
   }
 
   evaluateUser(cpfToEvaluate: string, evaluationValue: number): number {

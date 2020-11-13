@@ -37,12 +37,11 @@ export default class CarRegister {
     return this.cars;
   }
 
-  delete(licensePlate: string): boolean {
+  delete(licensePlate: string): number {
     var index: number = this.cars.findIndex(
       c => c.licensePlate == licensePlate
     );
-    if (index === -1) false;
-    this.cars.splice(index, 1);
-    return true;
+    if (index === -1) this.cars.splice(index, 1);
+    return index;
   }
 }

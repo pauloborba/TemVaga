@@ -32,7 +32,7 @@ export default class RideRegister {
     return;
   }
 
-  delete(id: string): boolean {
+  delete(id: string): number {
     return;
   }
 
