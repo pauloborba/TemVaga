@@ -1,30 +1,27 @@
-import User from '../User/user';
-
 export default class Seats{
     qttPlacesAvailable: number;
-    seats: User[] = [];
-    requests: User[] = [];
+    seats: string[] = [];
+    requests: string[] = [];
 
     constructor(places: number){
         this.qttPlacesAvailable = places;
     }
 
-    makeRequest(user: User): void{
-        this.requests.push(user);
+    makeRequest(cpf: string): void{
+        this.requests.push(cpf);
     }
 
-    acceptRequest(user: User): void{
-        const userIndex = this.requests.findIndex(u => u.cpf === user.cpf);
+    acceptRequest(cpf: string): void{
+        const userIndex = this.requests.findIndex(c => c === cpf);
         if(userIndex === -1) throw new Error();
-
-        this.seats.push(user);
+        this.seats.push(cpf);
 
         this.requests.splice(userIndex, 1);
         this.qttPlacesAvailable -= 1;
     }
 
-    rejectRequest(user: User): void{
-        const userIndex = this.requests.findIndex(u => u.cpf === user.cpf);
+    rejectRequest(cpf: string): void{
+        const userIndex = this.requests.findIndex(c => c === cpf);
         if(userIndex === -1) throw new Error();
         this.requests.splice(userIndex, 1);
     }
