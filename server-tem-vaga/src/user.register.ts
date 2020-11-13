@@ -28,7 +28,7 @@ export default class UserRegister {
     return result;
   }
   //TODO: Implement getUsers
-  getUsers(): User[] {
+  getUsers(cpf: string[]): User[] {
     return;
   }
 
