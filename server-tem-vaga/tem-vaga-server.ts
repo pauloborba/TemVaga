@@ -14,6 +14,8 @@ tvserver.use(allowCrossDomain);
 
 tvserver.use(bodyParser.json());
 
+tvserver.use('/userApi', require('./src/routes/user.api'));
+
 // tvserver.get('/alunos', function (req: express.Request, res: express.Response) {
 //   res.send(JSON.stringify(cadastro.getAlunos()));
 // })

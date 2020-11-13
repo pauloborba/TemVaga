@@ -1,6 +1,6 @@
 import User from '../../common/src/User/user';
 
-export class UserRegister {
+export default class UserRegister {
   users: User[] = [];
 
   register(user: User): User {
