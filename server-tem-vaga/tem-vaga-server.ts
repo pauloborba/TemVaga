@@ -18,6 +18,8 @@ tvserver.use('/userApi', require('./src/routes/user.api'));
 
 tvserver.use('/carApi', require('./src/routes/car.api'));
 
+tvserver.use('/rideApi', require('./src/routes/ride.api'));
+
 // tvserver.get('/alunos', function (req: express.Request, res: express.Response) {
 //   res.send(JSON.stringify(cadastro.getAlunos()));
 // })

@@ -1,7 +1,7 @@
 import Ride from '../../common/src/Ride/ride';
-import Route from '../../common/route';
+import Route from '../../common/src/Ride/route';
 
-export class RideRegister {
+export default class RideRegister {
   rides: Ride[] = [];
 
   register(ride: Ride): Ride {
