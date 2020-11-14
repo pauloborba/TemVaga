@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand">Tem Vaga?</a>
+    <ul class="navbar-list" routerLinkActive="active">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/available-rides"
+          >Caronas Disponíveis</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/requested-rides"
+          >Caronas Solicitadas</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/my-rides">Minha Caronas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/my-profile">Meu Perfil</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

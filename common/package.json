@@ -1,0 +1,17 @@
+{
+  "name": "tem-vaga-common",
+  "version": "1.0.0",
+  "description": "common files to both client and server",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Igor Simoes",
+  "license": "ISC",
+  "dependencies": {
+    "tslib": "^2.0.3",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.0",
+    "typescript": "^4.0.5"
+  }
+}
