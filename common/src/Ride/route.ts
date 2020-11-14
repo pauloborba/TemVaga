@@ -1,4 +1,4 @@
-interface IPlace{
+export interface IPlace{
     street: string;
     number: number;
 }
