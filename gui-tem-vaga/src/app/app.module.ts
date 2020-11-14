@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { MyRidesComponent } from './my-rides/my-rides.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AvailableRidesComponent } from './available-rides/available-rides.component';
@@ -32,7 +33,7 @@ import { RideService } from '../services/ride.service';
     RideRegisterComponent,
     RouteRegisterComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [UserService, CarService, RideService],
   bootstrap: [AppComponent],
 })
