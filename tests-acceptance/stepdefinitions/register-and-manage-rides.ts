@@ -1,77 +1,120 @@
-/*import { defineSupportCode } from 'cucumber';
-import { browser, $, element, ElementArrayFinder, by, ElementFinder } from 'protractor';
-let chai = require('chai').use(require('chai-as-promised'));
-let expect = chai.expect;
+import Ride from '../../common/src/Ride/ride';
+import { defineSupportCode } from 'cucumber';
+import {
+  browser,
+  $,
+  element,
+  ElementArrayFinder,
+  by,
+  ElementFinder,
+} from 'protractor';
+const chai = require('chai').use(require('chai-as-promised'));
+const expect = chai.expect;
 
-let sameCPF = ((elem, cpf) => elem.element(by.name('cpflist')).getText().then(text => text === cpf));
-let sameName = ((elem, name) => elem.element(by.name('nomelist')).getText().then(text => text === name));
-
-let pAND = ((p,q) => p.then(a => q.then(b => a && b)))
-
-let currentAlunoList: ElementFinder = null;
-
-async function criarAluno(name, cpf) {
-  await $("input[name='namebox']").sendKeys(<string> name);
-  await $("input[name='cpfbox']").sendKeys(<string> cpf);
-  await element(by.buttonText('Adicionar')).click();
+// prettier-ignore
+const sameDepartureTime = (elem, departureTime) => elem.element(by.name('departureTimeField')).getText().then(text => text === departureTime);
+// prettier-ignore
+const samePrice = (elem, price) => elem.element(by.name('priceField')).getText().then(text => text === price);
+// prettier-ignore
+const samePrivacy = (elem, isPrivate) => elem.element(by.name('isPrivateField')).getText().then(text => text === isPrivate);
+// prettier-ignore
+const sameSeats = (elem, seats) => elem.element(by.name('seatsField')).getText().then(text => text === seats);
+// prettier-ignore
+const sameDeparturePlace = (elem, departurePlace) => elem.element(by.name('departurePlaceField')).getText().then(text => text === departurePlace);
+// prettier-ignore
+const sameArrivalPlace = (elem, arrivalPlace) => elem.element(by.name('arrivalPlaceField')).getText().then(text => text === arrivalPlace);
+// prettier-ignore
+function checkAllProperties(elem: ElementFinder, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace): boolean {
+  sameDepartureTime(elem, departureTime).then(dT => {
+    samePrice(elem, price).then(pric => {
+      samePrivacy(elem, isPrivate).then(priv => {
+        sameSeats(elem, seats).then(s => {
+          sameDeparturePlace(elem, departurePlace).then(dP => {
+            sameArrivalPlace(elem, arrivalPlace).then(aP => {
+                return (dT && pric && priv && s && dP && aP);
+            });
+          });
+        });
+      });
+    });
+  });
+  return false;
 }
 
-async function assertTamanhoEqual(set,n) {
-  await set.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(n));
-}
+let pAND = (p, q) => p.then(a => q.then(b => a && b));
 
-async function assertElementsWithSameCPFAndName(n,cpf,name) { 
-  var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
-  var samecpfsandname = allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name)));
-  await assertTamanhoEqual(samecpfsandname,n);
-}
+const translator: { [portugueseKeys: string]: string } = {
+  CaronasDisponíveis: 'available-rides',
+  CaronasSolicitadas: 'requested-rides',
+  MinhasCaronas: 'my-rides',
+  MeuPerfil: 'my-profile',
+};
 
-async function assertElementsWithSameCPF(n,cpf) {
-  var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
-  var samecpfs = allalunos.filter(elem => sameCPF(elem,cpf));
-  await assertTamanhoEqual(samecpfs,n);
-  if(n > 0) {
-    currentAlunoList = samecpfs.get(0);
-  }
-}
+defineSupportCode(({ Given, When, Then }) => {
+  Given(
+    /^I am logged in with user apt to register rides "([^\"]*)"$/,
+    async userName => {}
+  );
 
-defineSupportCode(function ({ Given, When, Then }) {
-    Given(/^I am at the students page$/, async () => {
-        await browser.get("http://localhost:4200/");
-        await expect(browser.getTitle()).to.eventually.equal('TaGui');
-        await $("a[name='alunos']").click();
-    })
+  Given(/^I am at the "([^\"]*)" page$/, async pageTitle => {
+    pageTitle = pageTitle.toString();
+    const name = translator[pageTitle.replace(' ', '')];
+    await browser.get(`http://localhost:4200/${name}`);
+    await expect(browser.getTitle()).to.eventually.equal(pageTitle);
+    await $(`a[name='${name}']`).click();
+  });
 
-    Given(/^I cannot see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        var allcpfs : ElementArrayFinder = element.all(by.name('cpflist'));
-        var samecpfs = allcpfs.filter(elem =>
-                                      elem.getText().then(text => text === cpf));
-        await samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
-    });
+  When(
+    /^I try to register a new ride with properties: Departure time: "([^\"]*)", Price: "([^\"]*)", Private: "([^\"]*)", Seats: "(\d*)", Departure place: "([^\"]*)", Arrival place: "([^\"]*)"$/,
+    async (
+      departureTime,
+      price,
+      isPrivate,
+      seats,
+      departurePlace,
+      arrivalPlace
+    ) => {
+      await $("button[name='registerRide']").click();
+      await $("input[name='departureTimeBox']").sendKeys(<string>departureTime);
+      await $("input[name='priceBox']").sendKeys(<string>price);
+      if (isPrivate === 'Yes') await $("input[name='isPrivate']").click();
+      await $("input[name='seatsBox']").sendKeys(<string>seats);
+      await $("select[name='departurePlaceSelect']")
+        .$(`[value="${departurePlace}"]`)
+        .click();
+      await $("select[name='arrivalPlaceSelect']")
+        .$(`[value="${arrivalPlace}"]`)
+        .click();
+      await $("button[name='submitRide']").click();
+    }
+  );
+  Then(/^I am still at the "([^\"]*)" page$/, async pageTitle => {
+    pageTitle = pageTitle.toString();
+    await expect(browser.getTitle()).to.eventually.equal(pageTitle);
+  });
 
-    Given(/^I can see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        await criarAluno("Clarissa",cpf);
-        await assertElementsWithSameCPF(1,cpf);
-    });
-  
-    When(/^I try to register the student "([^\"]*)" with CPF "(\d*)"$/, async (name, cpf) => {
-        await $("input[name='namebox']").sendKeys(<string> name);
-        await $("input[name='cpfbox']").sendKeys(<string> cpf);
-        await element(by.buttonText('Adicionar')).click();
-    });
+  Then(/^a confirmation message is shown$/, async () => {
+    await $("button[name='confirmRegister']").click();
+  });
+  // prettier-ignore
+  Then(
+    /^I can see my newly registered ride with properties: Departure time: "([^\"]*)", Price: "([^\"]*)", Private: "([^\"]*)", Seats: "(\d*)", Departure place: "([^\"]*)", Arrival place: "([^\"]*)"$/,
+    async (departureTime, price, isPrivate, seats, departurePlace, arrivalPlace) => {
+      const myRides: ElementArrayFinder = element.all(by.name('rideList'));
+      await myRides.filter(elem =>checkAllProperties(elem, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace))
+        .then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    }
+  );
+  // prettier-ignore
+  Then(
+    /^at the page Caronas Disponíveis any user can see the newly registered ride with properties: Departure time: "([^\"]*)", Price: "([^\"]*)", Private: "([^\"]*)", Seats: "(\d*)", Departure place: "([^\"]*)", Arrival place: "([^\"]*)"$/,
+    async (departureTime, price, isPrivate, seats, departurePlace, arrivalPlace) => {
+      await $(`a[name='available-rides']`).click();
+      await expect(browser.getTitle()).to.eventually.equal('Caronas Disponíveis');
 
-    When(/^I try to delete the student with CPF "(\d*)"$/, async (cpf) => {
-      await currentAlunoList.element(by.name('deletebuttonlist')).click()
-    });
-
-    Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
-        var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
-        await allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name))).then
-                   (elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
-    });
-
-    Then(/^I cannot see the student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        await assertElementsWithSameCPF(0,cpf);
-        currentAlunoList = null;
-    });
-})*/
+      const availableRides: ElementArrayFinder = element.all(by.name('rideList'));
+      await availableRides.filter(elem =>checkAllProperties(elem, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace))
+        .then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    }
+  );
+});
