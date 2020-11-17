@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { CarService } from '../services/car.service';
 import { RideService } from '../services/ride.service';
+import {DisplayMapComponent} from '../app/displaymap/displaymap.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RideService } from '../services/ride.service';
     CarRegisterComponent,
     RideRegisterComponent,
     RouteRegisterComponent,
+    DisplayMapComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [UserService, CarService, RideService],

@@ -2,16 +2,16 @@ import {v4 as uuid} from 'uuid';
 import User from '../User/user';
 import Route from './route';
 import Seats from './seats';
-import { IPlace } from './route';
 
 interface IRide{
     price: number;
     places: number;
     isPrivate: boolean;
     departureTime: Date;
+    route: Route;
 }
 
-const baseIPlace:IPlace = {street: '', number: 0};
+const baseIPlace: string = '';
 
 export default class ride{
     id: string;
@@ -37,4 +37,9 @@ export default class ride{
     changePrivacy(){
         this.isPrivate = !this.isPrivate;
     }
+
+    getRoute(){
+        return this.route;
+    }
+
 }

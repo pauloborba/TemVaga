@@ -1,0 +1,20 @@
+<body>
+  <div id = "map"></div>
+  <div id = "dirPanel"></div>
+<table>
+    <tr *ngIf="this.requestadd">
+       <td><label>add </label></td>
+       <td><input [(ngModel)]="this.stopholder" ></td>
+       <td><button (click)="this.addStop()">catch-a-ride!</button></td>
+    </tr>
+    <tr *ngIf="this.requestremove">
+        <td><label>remove </label></td>
+        <td><input [(ngModel)]="this.stopholder"></td>
+        <td><button (click)="this.removeStop()">cancel ride</button></td>
+    </tr>
+    <tr *ngIf="this.driver">
+        <td><button (click)="this.setdriver()">directions/edit</button></td>
+        <td><button (click)="this.submitFull()">submit</button></td>
+     </tr>
+</table>
+</body>

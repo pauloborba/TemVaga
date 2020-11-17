@@ -1,1 +1,19 @@
 <p>route-register works!</p>
+<body>
+    <div id = "map"></div>
+    <div id ="dirPanel"> </div>
+    
+    <table>
+      <tr>
+         <td><label>start </label></td>
+         <td><input [(ngModel)]="this.start" ></td>
+         <td><button (click)="this.calc()">calc</button></td>
+      </tr>
+      <tr>
+         <td><label>dest </label></td>
+         <td><input [(ngModel)]="this.dest" ></td>
+         <td><button (click)="this.submit()">submit</button></td>
+      </tr>
+      </table>
+  
+  </body>    

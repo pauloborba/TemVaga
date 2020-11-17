@@ -10,11 +10,16 @@ import Route from '../../../common/src/Ride/route';
 export class RideService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   private baseURL = 'http://localhost:3000/rideApi';
+  private rides: Ride[] = [{id:"1",driver:"p",price:1,isPrivate:false,departureTime:null,route:null,seats:null,passengers:null,changePrivacy(){this.isPrivate = !this.isPrivate;},getRoute(){return this.route;}}];
 
   constructor(private http: HttpClient) {}
 
   create(ride: Ride): Observable<Ride> {
-    return;
+    return this.http.post<any>(this.baseURL + "/ride", ride, {headers: this.headers})
+             .pipe( 
+                retry(2),
+                map( res => {if (res.success) {return ride;} else {return null;}} )
+              ); 
   }
 
   update(ride: Ride): Observable<Ride> {
@@ -65,11 +70,32 @@ export class RideService {
     return;
   }
 
-  createRoute(route: Route): Observable<Route> {
-    return;
+  createRoute(id:string,route: Route): Observable<Route> {
+    //this.rides[index].route = route;
+    return this.http.put<any>(this.baseURL + "/ride/route/create/" + id, JSON.stringify(route), {headers: this.headers})
+             .pipe( 
+                retry(2),
+                map( res => {if (res.success) {return route;} else {return null;}} )
+              ); 
   }
 
   updateRoute(route: Route): Observable<Route> {
     return;
+  }
+
+  getRoute(id:string): Observable<Route>{
+    return this.http.get<any>(this.baseURL + "/ride/route/get/" + id)
+    .pipe(
+       retry(2)
+     );
+  }
+
+  addStop(index:String,stop: google.maps.DirectionsWaypoint){
+    //this.rides[index].route.addStop(stop);
+    return this.http.put<any>(this.baseURL + "/ride/route/stop/" + "1", JSON.stringify(stop), {headers: this.headers})
+             .pipe( 
+                retry(2),
+                map( res => {if (res.success) {return stop;} else {return null;}} )
+              ); 
   }
 }
