@@ -71,7 +71,8 @@ export default class RideRegister {
 
   addStop(id:string,stop:google.maps.DirectionsWaypoint):google.maps.DirectionsWaypoint{
     var b = this.rides.findIndex(a => a.id == id);
-    this.rides[0].route.addStop(stop);
+    console.log(this.rides[0]);
+    this.rides[0].route.stops.push(stop);
     return;
   }
 }

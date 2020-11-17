@@ -15,9 +15,13 @@ export class RouteRegisterComponent implements OnInit {
   start: string;
   stops: google.maps.DirectionsWaypoint[] = [];
   dest: string;
+  route: google.maps.DirectionsResult;
+  custom:boolean = false;
   
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer({draggable: true});
+
+  
   
   constructor(private rideservice: RideService) {}
   
@@ -34,6 +38,11 @@ export class RouteRegisterComponent implements OnInit {
   });
   
   this.directionsDisplay.setMap(this.map);
+
+  this.directionsDisplay.addListener("directions_changed", () => {
+    this.route=(this.directionsDisplay.getDirections());
+    this.custom = true;
+  });
   }
   
   calc(){
@@ -51,6 +60,7 @@ export class RouteRegisterComponent implements OnInit {
   }, (response, status)  => {
     if (status === google.maps.DirectionsStatus.OK) {
       this.directionsDisplay.setDirections(response);
+      this.route = response;
       this.directionsDisplay.setPanel(document.getElementById("dirPanel"))
     } else {
       alert("deu ruim: " + status);

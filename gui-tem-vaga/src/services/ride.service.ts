@@ -90,9 +90,9 @@ export class RideService {
      );
   }
 
-  addStop(index:String,stop: google.maps.DirectionsWaypoint){
+  addStop(id:String,stop: google.maps.DirectionsWaypoint){
     //this.rides[index].route.addStop(stop);
-    return this.http.put<any>(this.baseURL + "/ride/route/stop/" + "1", JSON.stringify(stop), {headers: this.headers})
+    return this.http.put<any>(`${this.baseURL}/ride/route/stop/${id}`, JSON.stringify(stop), {headers: this.headers})
              .pipe( 
                 retry(2),
                 map( res => {if (res.success) {return stop;} else {return null;}} )
