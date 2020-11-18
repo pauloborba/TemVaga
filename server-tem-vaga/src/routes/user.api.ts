@@ -6,18 +6,6 @@ const userRoutes = Router();
 
 const userRegister: UserRegister = new UserRegister();
 
-userRoutes.post('/user', (req: Request, res: Response) => {
-  // userRegister.register(user);
-});
-
-userRoutes.put('/user', (req: Request, res: Response) => {
-  // userRegister.update(user)
-});
-
-userRoutes.get('/user/:cpf', (req: Request, res: Response) => {
-  //userRegister.getUser(cpf)
-});
-
 userRoutes.get('/user/some', (req: Request, res: Response) => {
   //userRegister.getUsers(cpf[])
 });
@@ -26,12 +14,21 @@ userRoutes.get('/user/all', (req: Request, res: Response) => {
   //userRegister.getAllUsers()
 });
 
-userRoutes.delete(
-  '/user/:cpf',
-  (req: Request, res: Response) => {
-    // userRegister.delete(cpf)
-  }
-);
+userRoutes.get('/user/:cpf', (req: Request, res: Response) => {
+  //userRegister.getUser(cpf)
+});
+
+userRoutes.post('/user', (req: Request, res: Response) => {
+  // userRegister.register(user);
+});
+
+userRoutes.delete('/user/:cpf', (req: Request, res: Response) => {
+  // userRegister.delete(cpf)
+});
+
+userRoutes.put('/user', (req: Request, res: Response) => {
+  // userRegister.update(user)
+});
 
 userRoutes.put('/user/:cpf', (req: Request, res: Response) => {
   // userRegister.evaluateUser(cpfToEvaluate, evaluationValue)
