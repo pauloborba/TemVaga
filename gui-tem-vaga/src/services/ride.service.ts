@@ -90,12 +90,19 @@ export class RideService {
      );
   }
 
-  addStop(id:String,stop: google.maps.DirectionsWaypoint){
+  addStop(id:string,stop: google.maps.DirectionsWaypoint){
     //this.rides[index].route.addStop(stop);
     return this.http.put<any>(`${this.baseURL}/ride/route/stop/${id}`, JSON.stringify(stop), {headers: this.headers})
              .pipe( 
                 retry(2),
                 map( res => {if (res.success) {return stop;} else {return null;}} )
               ); 
+  }
+
+  removeStop(stop:google.maps.DirectionsWaypoint){
+    return this.http.delete(this.baseURL + "/ride/route/delete/"+ stop, {headers: this.headers})
+    .pipe(
+      retry(2)
+    );
   }
 }

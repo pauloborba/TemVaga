@@ -8,9 +8,11 @@ import Route from '../../../../common/src/Ride/route';
   styleUrls: ['./displaymap.component.css']
 })
 export class DisplayMapComponent implements OnInit {
+  @Input() id : string
   @Input() requestadd: boolean;
   @Input() requestremove: boolean;
   @Input() driver: boolean;
+  //recebe o id da carona e um parametro que decide que tipo de mapa será mostrado
 
   map: google.maps.Map;
   start: string;
@@ -26,7 +28,8 @@ export class DisplayMapComponent implements OnInit {
   
   ngOnInit(){
   this.initMap();
-  this.rideservice.getRoute("1").subscribe(
+  this.id = "1";
+  this.rideservice.getRoute(this.id).subscribe(
     ar => {
       if(ar){
         this.route = ar;
@@ -38,6 +41,9 @@ export class DisplayMapComponent implements OnInit {
     }
 
   );
+    if(this.driver){
+      this.directionsDisplay.setPanel(document.getElementById("dirPanel"))
+     }
   }
   
   initMap(){
@@ -56,17 +62,11 @@ export class DisplayMapComponent implements OnInit {
  //   location: "Rua Barão de Granito",
  //   stopover: true,
  //});
-  console.log(this.driver);
-  if(this.route.hasFullRoute){
-    this.directionsDisplay.setDirections(this.route.fullRoute);
-    if(this.driver){
-      this.directionsDisplay.setPanel(document.getElementById("dirPanel"))
-     }
-  }else{
   this.directionsService.route({
     origin: this.start,
     waypoints: this.stops,
     optimizeWaypoints: true,
+    provideRouteAlternatives: true,
     destination: this.dest,
     travelMode: google.maps.TravelMode.DRIVING,
   }, (response, status)  => {
@@ -75,11 +75,13 @@ export class DisplayMapComponent implements OnInit {
       if(this.driver){
       this.directionsDisplay.setPanel(document.getElementById("dirPanel"))
       }
+      if(this.route.stops.length == 0){
+      this.directionsDisplay.setRouteIndex(this.route.Index);
+      }
     } else {
       alert("deu ruim: " + status);
     }
   });
-}
 }
 
 setdriver(){
@@ -93,6 +95,15 @@ addStop(){
   this.stops.push(a);
   this.calc();
   this.rideservice.addStop("1",a).subscribe();
+}
+
+removeStop(){
+  console.log(this.stops);
+  var a = {location:this.stopholder,stopover:true};
+  const stopin = this.stops.findIndex(b => b == a);
+  this.stops.splice(stopin,1);
+  this.calc();
+  this.rideservice.removeStop(a).subscribe();
 }
 
 }

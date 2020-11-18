@@ -9,14 +9,14 @@ import Route from '../../../../../common/src/Ride/route';
 })
 export class RouteRegisterComponent implements OnInit {
 
-  @Input() id: string;
+  @Input() id: string; //Recebe o id da carona do componente pai(ride-register)
 
   map: google.maps.Map;
   start: string;
   stops: google.maps.DirectionsWaypoint[] = [];
   dest: string;
   route: google.maps.DirectionsResult;
-  custom:boolean = false;
+  custom:boolean = true;
   
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer({draggable: true});
@@ -29,7 +29,7 @@ export class RouteRegisterComponent implements OnInit {
   this.initMap();
   }
   
-  initMap(){
+  initMap(){      //inicialização do mapa
     this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
     center: { lat: -8.05, lng: -34.900002 },
     zoom: 13,
@@ -41,15 +41,12 @@ export class RouteRegisterComponent implements OnInit {
 
   this.directionsDisplay.addListener("directions_changed", () => {
     this.route=(this.directionsDisplay.getDirections());
-    this.custom = true;
+    this.custom = !this.custom;
+    console.log(this.route);
   });
   }
   
-  calc(){
-  //this.stops.push({
- //   location: "Rua Barão de Granito",
- //   stopover: true,
- //});
+  calc(){             //calculo da rota
   this.directionsService.route({
     origin: this.start,
     waypoints: this.stops,
@@ -68,11 +65,14 @@ export class RouteRegisterComponent implements OnInit {
   });
 }
 
-  submit(){
+  submit(){        //enviar rota para o servidor
+    if(this.custom == false){
      var r = {id:"1",driver:"p",price:1,isPrivate:false,departureTime:null,route:null,seats:null,passengers:null,changePrivacy(){this.isPrivate = !this.isPrivate;},getRoute(){return this.route;}}
-     this.rideservice.create(r).subscribe();    
+     this.rideservice.create(r).subscribe();    //dummy do ride-register
      var a:Route = new Route({departurePlace: this.start,arrivalPlace: this.dest});
+     a.Index = this.directionsDisplay.getRouteIndex(); //index da rota no caso de escolher uma rota
      this.rideservice.createRoute("1",a).subscribe();
+    }
   }
 
 }

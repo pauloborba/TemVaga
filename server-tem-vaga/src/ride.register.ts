@@ -61,7 +61,9 @@ export default class RideRegister {
   }
 
   getRota(id:string): Route{
-    var b = this.rides.findIndex(a => a.id == id)
+    console.log(id);
+    var b = this.rides.findIndex(a => a.id == id);
+    console.log(b);
     return this.rides[b].route;
   }
 
@@ -71,8 +73,14 @@ export default class RideRegister {
 
   addStop(id:string,stop:google.maps.DirectionsWaypoint):google.maps.DirectionsWaypoint{
     var b = this.rides.findIndex(a => a.id == id);
-    console.log(this.rides[0]);
-    this.rides[0].route.stops.push(stop);
+    this.rides[b].route.stops.push(stop);
+    return;
+  }
+
+  removeStop(stop:google.maps.DirectionsWaypoint):google.maps.DirectionsWaypoint{
+    //var ridein = this.rides.findIndex(a => a.id == id);
+    const stopin = this.rides[0].route.stops.findIndex(s => s == stop);
+    this.rides[0].route.stops.splice(stopin, 1);
     return;
   }
 }

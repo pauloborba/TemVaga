@@ -12,8 +12,7 @@ export default class Route{
     departurePlace: string;
     arrivalPlace: string;
     stops: google.maps.DirectionsWaypoint[] = [];
-    hasFullRoute: boolean = false;
-    fullRoute: google.maps.DirectionsResult;
+    Index: number;
 
     constructor({departurePlace, arrivalPlace}: IRoute){
         this.departurePlace = departurePlace;
@@ -28,9 +27,4 @@ export default class Route{
         const stopIndex = this.stops.findIndex(s => s == stop);
         this.stops.splice(stopIndex, 1);
     }
-
-   /* setFullRoute(pass){
-        this.hasFullRoute = true;
-        this.fullRoute = pass;
-    }*/
 }

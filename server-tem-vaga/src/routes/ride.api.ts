@@ -86,6 +86,7 @@ rideRoutes.get(
   (req: express.Request, res: express.Response) => {
     console.log("echoget");
     const { id } = req.params;
+    console.log(id);
     res.send(JSON.stringify(rideRegister.getRota(id)));
   }
 );
@@ -95,6 +96,15 @@ rideRoutes.put(
   (req: express.Request, res: express.Response) => {
     //var stop = <google.maps.DirectionsWaypoint>req.body; 
     //rideRegister.updateRoute(stop);
+  }
+);
+
+rideRoutes.delete(
+  '/ride/route/delete/:stop',
+  (req: express.Request, res: express.Response) => {
+    const {stop} = req.params;
+    //rideRegister.removeStop(stop);
+    res.send({"success":"ok"});
   }
 );
 
