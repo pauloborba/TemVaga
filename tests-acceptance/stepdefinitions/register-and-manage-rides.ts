@@ -8,6 +8,7 @@ import {
   by,
   ElementFinder,
 } from 'protractor';
+import { protractor } from 'protractor/built/ptor';
 const chai = require('chai').use(require('chai-as-promised'));
 const expect = chai.expect;
 
@@ -25,12 +26,12 @@ const sameDeparturePlace = (elem, departurePlace) => elem.element(by.name('depar
 const sameArrivalPlace = (elem, arrivalPlace) => elem.element(by.name('arrivalPlaceField')).getText().then(text => text === arrivalPlace);
 // prettier-ignore
 function checkAllProperties(elem: ElementFinder, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace): boolean {
-  sameDepartureTime(elem, departureTime).then(dT => {
-    samePrice(elem, price).then(pric => {
-      samePrivacy(elem, isPrivate).then(priv => {
-        sameSeats(elem, seats).then(s => {
-          sameDeparturePlace(elem, departurePlace).then(dP => {
-            sameArrivalPlace(elem, arrivalPlace).then(aP => {
+  return sameDepartureTime(elem, departureTime).then(dT => {
+    return samePrice(elem, price).then(pric => {
+      return samePrivacy(elem, isPrivate).then(priv => {
+        return sameSeats(elem, seats).then(s => {
+          return sameDeparturePlace(elem, departurePlace).then(dP => {
+            return sameArrivalPlace(elem, arrivalPlace).then(aP => {
                 return (dT && pric && priv && s && dP && aP);
             });
           });
@@ -38,10 +39,9 @@ function checkAllProperties(elem: ElementFinder, departureTime, price, isPrivate
       });
     });
   });
-  return false;
 }
 
-let pAND = (p, q) => p.then(a => q.then(b => a && b));
+var until = protractor.ExpectedConditions;
 
 const translator: { [portugueseKeys: string]: string } = {
   CaronasDisponíveis: 'available-rides',
@@ -52,16 +52,29 @@ const translator: { [portugueseKeys: string]: string } = {
 
 defineSupportCode(({ Given, When, Then }) => {
   Given(
-    /^I am logged in with user apt to register rides "([^\"]*)"$/,
-    async userName => {}
+    /^I am logged in with user apt to register rides "([^\"]*)" with email "([^\"]*)" and password "([^\"]*)"$/,
+    async (userName, email, password) => {
+      await browser.get(`http://localhost:4200/my-profile`);
+      await $("input[name='emailLoginBox']").sendKeys(<string>email);
+      await $("input[name='passwordLoginBox']").sendKeys(<string>password);
+      await $("button[name='submitLogin']").click();
+      // prettier-ignore
+      await browser.wait(
+        until.presenceOf(element(by.name('nameField'))),
+        5000,
+        'Element taking too long to appear in the DOM'
+      );
+      await expect(element(by.name('nameField')).getText()).to.eventually.equal(
+        userName
+      );
+    }
   );
 
   Given(/^I am at the "([^\"]*)" page$/, async pageTitle => {
     pageTitle = pageTitle.toString();
     const name = translator[pageTitle.replace(' ', '')];
-    await browser.get(`http://localhost:4200/${name}`);
-    await expect(browser.getTitle()).to.eventually.equal(pageTitle);
     await $(`a[name='${name}']`).click();
+    await expect(browser.getTitle()).to.eventually.equal(pageTitle);
   });
 
   When(
@@ -94,7 +107,12 @@ defineSupportCode(({ Given, When, Then }) => {
   });
 
   Then(/^a confirmation message is shown$/, async () => {
-    await $("button[name='confirmRegister']").click();
+    await browser.wait(
+      until.presenceOf($("button[name='closeConfirmationMessage']")),
+      5000,
+      'Element taking too long to appear in the DOM'
+    );
+    await $("button[name='closeConfirmationMessage']").click();
   });
   // prettier-ignore
   Then(

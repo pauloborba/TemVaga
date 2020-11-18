@@ -3,7 +3,7 @@ Feature:  As a driver with registered car and available seats
           So that I can reduce my monthly gas cost
 
 Scenario: Register ride successfully
-Given I am logged in with user apt to register rides "Igor Simoes"
+Given I am logged in with user apt to register rides "Igor Simoes" with email "igor" and password "123"
 Given I am at the "Minhas Caronas" page
 When I try to register a new ride with properties: Departure time: "13:00", Price: "2.00", Private: "Yes", Seats: "1", Departure place: "UFPE", Arrival place: "Olinda"
 Then a confirmation message is shown
