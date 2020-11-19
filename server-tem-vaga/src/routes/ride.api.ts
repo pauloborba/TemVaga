@@ -103,7 +103,7 @@ rideRoutes.delete(
   '/ride/route/delete/:stop',
   (req: express.Request, res: express.Response) => {
     const {stop} = req.params;
-    //rideRegister.removeStop(stop);
+    rideRegister.removeStop(stop);
     res.send({"success":"ok"});
   }
 );

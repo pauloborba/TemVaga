@@ -77,9 +77,9 @@ export default class RideRegister {
     return;
   }
 
-  removeStop(stop:google.maps.DirectionsWaypoint):google.maps.DirectionsWaypoint{
+  removeStop(stop:string):google.maps.DirectionsWaypoint{
     //var ridein = this.rides.findIndex(a => a.id == id);
-    const stopin = this.rides[0].route.stops.findIndex(s => s == stop);
+    const stopin = this.rides[0].route.stops.findIndex(s => s.location == stop);
     this.rides[0].route.stops.splice(stopin, 1);
     return;
   }
