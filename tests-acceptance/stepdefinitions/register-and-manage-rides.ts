@@ -48,6 +48,7 @@ const translator: { [portugueseKeys: string]: string } = {
   CaronasSolicitadas: 'requested-rides',
   MinhasCaronas: 'my-rides',
   MeuPerfil: 'my-profile',
+  Pedidos: '',
 };
 
 defineSupportCode(({ Given, When, Then }) => {
@@ -77,6 +78,21 @@ defineSupportCode(({ Given, When, Then }) => {
     await expect(browser.getTitle()).to.eventually.equal(pageTitle);
   });
 
+  Given(
+    /^at the page "Caronas Disponíveis" I can see a notification about pending requests for my ride$/,
+    async () => {}
+  );
+
+  Given(
+    /^at the page "Minhas Caronas" I can see "(\d*)" requests for my ride$/,
+    async requestQtt => {}
+  );
+
+  Given(
+    /^I can see pending requests for users "([^\"]*)" and "([^\"]*)"$/,
+    async (firstUser, secondUser) => {}
+  );
+
   When(
     /^I try to register a new ride with properties: Departure time: "([^\"]*)", Price: "([^\"]*)", Private: "([^\"]*)", Seats: "(\d*)", Departure place: "([^\"]*)", Arrival place: "([^\"]*)"$/,
     async (
@@ -101,6 +117,17 @@ defineSupportCode(({ Given, When, Then }) => {
       await $("button[name='submitRide']").click();
     }
   );
+
+  When(
+    /^I try to confirm the request from user "([^\"]*)"$/,
+    async confirmedUser => {}
+  );
+
+  When(
+    /^I try to reject the request from user "([^\"]*)"$/,
+    async rejectedUser => {}
+  );
+
   Then(/^I am still at the "([^\"]*)" page$/, async pageTitle => {
     pageTitle = pageTitle.toString();
     await expect(browser.getTitle()).to.eventually.equal(pageTitle);
@@ -134,5 +161,18 @@ defineSupportCode(({ Given, When, Then }) => {
       await availableRides.filter(elem =>checkAllProperties(elem, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace))
         .then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
     }
+  );
+
+  Then(
+    /^I can see only the user "([^\"]*)" as a confirmed user$/,
+    async confirmedUser => {}
+  );
+  Then(
+    /^the user "([^\"]*)" can see a notification about the request confirmation$/,
+    async confirmedUser => {}
+  );
+  Then(
+    /^the user "([^\"]*)" can see a notification about the request rejection$/,
+    async rejectedUser => {}
   );
 });
