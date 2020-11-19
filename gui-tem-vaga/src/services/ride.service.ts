@@ -12,9 +12,16 @@ export class RideService {
   private baseURL = 'http://localhost:3000/rideApi';
 
   constructor(private http: HttpClient) {}
-
-  create(ride: Ride): Observable<Ride> {
-    return;
+  // prettier-ignore
+  create(ride): Observable<Ride> {
+    return (this.http
+      .post<any>(`${this.baseURL}/ride`, ride, { headers: this.headers })
+      .pipe(retry(2), map((res) => {
+          if (res.success) return JSON.parse(res.ride);
+          return null;
+        })
+      )
+    );
   }
 
   update(ride: Ride): Observable<Ride> {
@@ -22,15 +29,19 @@ export class RideService {
   }
 
   getRide(id: string): Observable<Ride> {
-    return;
+    return this.http.get<Ride>(`${this.baseURL}/ride/${id}`).pipe(retry(2));
   }
 
   getRides(ids: string[]): Observable<Ride[]> {
-    return;
+    return this.http
+      .get<Ride[]>(`${this.baseURL}/ride/some`, {
+        params: { ids: ids },
+      })
+      .pipe(retry(2));
   }
 
   getAllRides(): Observable<Ride[]> {
-    return;
+    return this.http.get<Ride[]>(`${this.baseURL}/ride/all`).pipe(retry(2));
   }
 
   getFilteredRides(comparisonRide: Ride): Observable<Ride[]> {

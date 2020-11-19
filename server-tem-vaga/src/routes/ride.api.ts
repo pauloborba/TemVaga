@@ -8,9 +8,7 @@ const rideRegister: RideRegister = new RideRegister();
 
 rideRoutes.get('/ride/some', (req: Request, res: Response) => {
   // prettier-ignore
-  console.log(req.query.ids)
-  res.send({ success: 'ok' });
-  // const rides: Ride[] = rideRegister.getRides(req.);
+  res.send(JSON.stringify(rideRegister.getRides(req.query.ids)));
 });
 
 rideRoutes.get('/ride/all', (req: Request, res: Response) => {

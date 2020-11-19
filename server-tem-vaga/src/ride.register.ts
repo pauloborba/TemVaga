@@ -4,12 +4,17 @@ import Route from '../../common/src/Ride/route';
 export default class RideRegister {
   rides: Ride[] = [];
 
-  register(ride: Ride): Ride {
-    return;
-  }
-
-  idNotRegistered(id: string): boolean {
-    return;
+  register(ride: any): Ride {
+    //prettier-ignore
+    const {driver, departureTime, price, isPrivate, seats, departurePlace, arrivalPlace} = ride;
+    var newRide = new Ride(
+      driver,
+      { departureTime, price, isPrivate, seats },
+      departurePlace,
+      arrivalPlace
+    );
+    this.rides.push(newRide);
+    return newRide;
   }
 
   update(ride: Ride): Ride {
@@ -17,11 +22,20 @@ export default class RideRegister {
   }
 
   getRide(id: string): Ride {
-    return;
+    const result: Ride = this.rides.find(r => r.id === id);
+    return result;
   }
 
-  getRides(ids: string[]): Ride[] {
-    return;
+  getRides(ids: any): Ride[] {
+    var idSet: Set<string>;
+    if (typeof ids === 'string') {
+      idSet = new Set();
+      idSet.add(ids);
+    } else {
+      idSet = new Set(ids);
+    }
+    const result: Ride[] = this.rides.filter(r => idSet.has(r.id));
+    return result;
   }
 
   getAllRides(): Ride[] {
@@ -33,7 +47,9 @@ export default class RideRegister {
   }
 
   delete(id: string): number {
-    return;
+    const index: number = this.rides.findIndex(r => r.id === id);
+    if (index !== -1) this.rides.splice(index, 1);
+    return index;
   }
 
   createRequest(id: string, requesterCpf: string): boolean {

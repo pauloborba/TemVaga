@@ -1,1 +1,71 @@
-<p>ride-register works!</p>
+<!-- prettier-ignore -->
+<button class="btn-cancel-register" (click)="onCancelRegister()">
+  Cancel
+</button>
+<form
+  [formGroup]="registerFormModel"
+  (ngSubmit)="onSubmit(registerFormModel.value)"
+>
+  <div>
+    <label for="departureTime"> Horário de Partida: </label>
+    <input
+      id="departureTime"
+      name="departureTimeBox"
+      type="time"
+      formControlName="departureTime"
+    />
+  </div>
+
+  <div>
+    <label for="price"> Preço: </label>
+    <input id="price" name="priceBox" type="text" formControlName="price" />
+  </div>
+
+  <div>
+    <label for="isPrivate"> Privada: </label>
+    <input
+      id="isPrivate"
+      name="isPrivate"
+      type="radio"
+      value="Yes"
+      formControlName="isPrivate"
+    />
+  </div>
+
+  <div>
+    <label for="seats"> Vagas: </label>
+    <input id="seats" name="seatsBox" type="text" formControlName="seats" />
+  </div>
+
+  <div>
+    <label for="departurePlace"> Local de Partida: </label>
+    <select
+      id="departurePlace"
+      name="departurePlaceSelect"
+      formControlName="departurePlace"
+    >
+      <option value="">Escolha o local de partida</option>
+      <option *ngFor="let place of Places" [value]="place">
+        {{ place }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="arrivalPlace"> Local de Chegada: </label>
+    <select
+      id="arrivalPlace"
+      name="arrivalPlaceSelect"
+      formControlName="arrivalPlace"
+    >
+      <option value="">Escolha o local de chegada</option>
+      <option *ngFor="let place of Places" [value]="place">
+        {{ place }}
+      </option>
+    </select>
+  </div>
+
+  <button class="btn-submit-register" name="submitRide" type="submit">
+    Registrar
+  </button>
+</form>

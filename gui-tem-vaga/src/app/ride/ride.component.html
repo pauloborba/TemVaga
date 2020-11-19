@@ -1,0 +1,57 @@
+<div class="ride-container">
+  <a href="" class="ride-requests"></a>
+  <div class="map-container">
+    <p>ROTA</p>
+    <table>
+      <tr>
+        <td><label>De: </label></td>
+        <td name="departurePlaceField">{{ rideInfo.route.departurePlace }}</td>
+      </tr>
+      <tr>
+        <td><label>Para: </label></td>
+        <td name="arrivalPlaceField">{{ rideInfo.route.arrivalPlace }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="ride-info-container">
+    <p>INFORMAÇÕES</p>
+    <table>
+      <tr>
+        <td>
+          <tr>
+            <td><label>Horário: </label></td>
+            <td name="departureTimeField">
+              {{ rideInfo.departureTime }}
+            </td>
+          </tr>
+          <tr>
+            <td><label>Preço: </label></td>
+            <td name="priceField">
+              {{ rideInfo.price }}
+            </td>
+          </tr>
+          <tr>
+            <td><label>Privada: </label></td>
+            <td name="isPrivateField">
+              {{ rideInfo.isPrivate }}
+            </td>
+          </tr>
+        </td>
+        <td>
+          <tr>
+            <td><label>Vagas: </label></td>
+            <td name="seatsField">
+              {{ rideInfo.seats.qttSeatsAvailable }}
+            </td>
+          </tr>
+          <tr *ngIf="showRequests">
+            <td><label>Pedidos: </label></td>
+            <td name="requestsField">
+              {{ rideInfo.seats.requests.length }}
+            </td>
+          </tr>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

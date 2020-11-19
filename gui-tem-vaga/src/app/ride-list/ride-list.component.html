@@ -1,1 +1,6 @@
-<p>ride-list works!</p>
+<app-ride
+  *ngFor="let ride of rideList"
+  name="rideList"
+  [rideInfo]="ride"
+  [showRequests]="showRequests"
+></app-ride>

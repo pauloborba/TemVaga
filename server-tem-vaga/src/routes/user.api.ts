@@ -11,15 +11,30 @@ userRoutes.get('/user/some', (req: Request, res: Response) => {
 });
 
 userRoutes.get('/user/all', (req: Request, res: Response) => {
-  //userRegister.getAllUsers()
+  res.send(JSON.stringify(userRegister.getAllUsers()));
+});
+
+userRoutes.get('/user/login', (req: Request, res: Response) => {
+  const { email, password } = req.query;
+  const user: User = userRegister.getUserByLogin(email, password);
+  res.send(JSON.stringify(user));
 });
 
 userRoutes.get('/user/:cpf', (req: Request, res: Response) => {
-  //userRegister.getUser(cpf)
+  const user: User = userRegister.getUser(req.params.cpf);
+  res.send(JSON.stringify(user));
 });
 
 userRoutes.post('/user', (req: Request, res: Response) => {
-  // userRegister.register(user);
+  const user: User = userRegister.register(<User>req.body);
+  if (user) {
+    res.send({
+      success: 'The user was registered successfully!',
+      user: JSON.stringify(user),
+    });
+  } else {
+    res.send({ failure: 'Something went wrong on user registration' });
+  }
 });
 
 userRoutes.delete('/user/:cpf', (req: Request, res: Response) => {
@@ -28,6 +43,21 @@ userRoutes.delete('/user/:cpf', (req: Request, res: Response) => {
 
 userRoutes.put('/user', (req: Request, res: Response) => {
   // userRegister.update(user)
+});
+
+userRoutes.put('/user/registerRide/:cpf', (req: Request, res: Response) => {
+  const user = userRegister.insertRegisteredRide(
+    req.params.cpf,
+    req.body.rideId
+  );
+  if (user) {
+    res.send({
+      success: 'The ride was inserted successfully!',
+      user: JSON.stringify(user),
+    });
+  } else {
+    res.send({ failure: 'Something went wrong on ride insertion' });
+  }
 });
 
 userRoutes.put('/user/:cpf', (req: Request, res: Response) => {

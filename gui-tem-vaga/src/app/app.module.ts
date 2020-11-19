@@ -18,6 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { CarService } from '../services/car.service';
 import { RideService } from '../services/ride.service';
+import { RideComponent } from './ride/ride.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { RideService } from '../services/ride.service';
     CarRegisterComponent,
     RideRegisterComponent,
     RouteRegisterComponent,
+    RideComponent,
+    UserLoginComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
