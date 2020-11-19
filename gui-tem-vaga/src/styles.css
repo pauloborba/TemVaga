@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --base-blue: #133b5c;
+  --darker-blue: #1d2d50;
+  --lighter-blue: #1e5f74;
+  --main-background: #fcdab7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  background-color: var(--main-background);
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
