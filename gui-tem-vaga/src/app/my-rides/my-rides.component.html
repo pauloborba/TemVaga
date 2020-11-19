@@ -45,6 +45,7 @@
     <ng-template #showRideList>
       <app-ride-list
         *ngIf="isLoggedIn"
+        [isMyRides]="true"
         [rideList]="myRides"
         [showRequests]="true"
       ></app-ride-list>

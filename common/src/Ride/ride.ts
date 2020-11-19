@@ -3,18 +3,18 @@ import Route from './route';
 import Seats from './seats';
 
 interface IRide {
-  departureTime: Date;
-  price: number;
-  isPrivate: boolean;
-  seats: number;
+  departureTime: string;
+  price: string;
+  isPrivate: string;
+  seats: string;
 }
 
 export default class Ride {
   id: string;
   driver: string;
-  departureTime: Date;
-  price: number;
-  isPrivate: boolean;
+  departureTime: string;
+  price: string;
+  isPrivate: string;
   seats: Seats;
   route: Route;
 
@@ -34,7 +34,9 @@ export default class Ride {
   }
 
   changePrivacy() {
-    this.isPrivate = !this.isPrivate;
+    this.isPrivate === 'Yes'
+      ? (this.isPrivate = 'No')
+      : (this.isPrivate = 'Yes');
   }
 
   getDeparturePlace(): string {
@@ -43,5 +45,21 @@ export default class Ride {
 
   getArrivalPlace(): string {
     return this.route.getArrivalPlace();
+  }
+
+  createRequest(requesterCpf: string): string {
+    return this.seats.createRequest(requesterCpf);
+  }
+
+  rejectRequest(rejectedCpf: string): number {
+    return this.seats.rejectRequest(rejectedCpf);
+  }
+
+  acceptRequest(acceptedCpf: string): number {
+    return this.seats.acceptRequest(acceptedCpf);
+  }
+
+  cancelPassenger(cancelledCpf: string): number {
+    return this.seats.cancelPassenger(cancelledCpf);
   }
 }

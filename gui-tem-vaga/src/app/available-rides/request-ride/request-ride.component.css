@@ -16,7 +16,7 @@
   color: var(--darker-blue);
 }
 
-.requests-container {
+.request-ride-container {
   margin: 0 400px;
   margin-bottom: 10px;
   flex-grow: 1;

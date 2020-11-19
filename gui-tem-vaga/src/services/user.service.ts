@@ -61,7 +61,11 @@ export class UserService {
   }
 
   getUsers(cpfs: string[]): Observable<User[]> {
-    return;
+    return this.http
+      .get<User[]>(`${this.baseURL}/user/some`, {
+        params: { cpfs: cpfs },
+      })
+      .pipe(retry(2));
   }
 
   getAllUsers(): Observable<User[]> {
@@ -75,7 +79,7 @@ export class UserService {
   insertRegisteredRide(driverCpf: string, rideId: string): Observable<User> {
     return this.http
       .put<any>(
-        `${this.baseURL}/user/registerRide/${driverCpf}`,
+        `${this.baseURL}/user/registerRide/insert/${driverCpf}`,
         { rideId: rideId },
         {
           headers: this.headers,
@@ -86,6 +90,69 @@ export class UserService {
         map((res) => {
           if (res.success) {
             this.setNextUser(JSON.parse(res.user));
+          } else {
+            return null;
+          }
+        })
+      );
+  }
+
+  removeRegisteredRide(driverCpf: string, rideId: string): Observable<User> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/user/registerRide/remove/${driverCpf}`,
+        { rideId: rideId },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            return JSON.parse(res.user);
+          } else {
+            return null;
+          }
+        })
+      );
+  }
+
+  insertRequestedRide(userCpf: string, rideId: string): Observable<User> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/user/requestRide/insert/${userCpf}`,
+        { rideId: rideId },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            this.setNextUser(JSON.parse(res.user));
+          } else {
+            return null;
+          }
+        })
+      );
+  }
+
+  removeRequestedRide(userCpf: string, rideId: string): Observable<User> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/user/requestRide/remove/${userCpf}`,
+        { rideId: rideId },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            return JSON.parse(res.user);
           } else {
             return null;
           }

@@ -12,7 +12,7 @@ export default class UserRegister {
     // prettier-ignore
     const userRafael = new User('456', 'Rafael Pereira', '', '991', 'rafael', '123');
     // prettier-ignore
-    const userPedro = new User('798', 'Pedro Buarque', '', '991', 'pedro', '123');
+    const userPedro = new User('789', 'Pedro Buarque', '', '991', 'pedro', '123');
 
     this.users = [userIgor, userTiago, userRafael, userPedro];
   }
@@ -42,6 +42,24 @@ export default class UserRegister {
     return result;
   }
 
+  removeRegisteredRide(cpf: string, rideId: string): User {
+    const result: User = this.users.find(u => u.cpf === cpf);
+    if (result) result.removeRegisteredRide(rideId);
+    return result;
+  }
+
+  insertRequestedRide(cpf: string, rideId: string): User {
+    const result: User = this.users.find(u => u.cpf === cpf);
+    if (result) result.insertRequestedRide(rideId);
+    return result;
+  }
+
+  removeRequestedRide(cpf: string, rideId: string): User {
+    const result: User = this.users.find(u => u.cpf === cpf);
+    if (result) result.removeRequestedRide(rideId);
+    return result;
+  }
+
   getUser(cpf: string): User {
     var result: User = this.users.find(u => u.cpf == cpf);
     return result;
@@ -53,9 +71,17 @@ export default class UserRegister {
 
     return null;
   }
-  //TODO: Implement getUsers
-  getUsers(cpf: string[]): User[] {
-    return;
+
+  getUsers(cpfs: any): User[] {
+    var cpfSet: Set<string>;
+    if (typeof cpfs === 'string') {
+      cpfSet = new Set();
+      cpfSet.add(cpfs);
+    } else {
+      cpfSet = new Set(cpfs);
+    }
+    const result: User[] = this.users.filter(r => cpfSet.has(r.cpf));
+    return result;
   }
 
   getAllUsers(): User[] {

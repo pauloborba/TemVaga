@@ -1,0 +1,26 @@
+.inner-page-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  height: 80px;
+}
+
+.page-header h1 {
+  align-self: center;
+  color: var(--darker-blue);
+}
+
+.requested-rides-container {
+  margin: 0 400px;
+  margin-bottom: 10px;
+  flex-grow: 1;
+  border: 3px solid var(--darker-blue);
+  border-radius: 7px;
+  background-color: var(--lighter-blue);
+}

@@ -1,1 +1,25 @@
-<p>requests works!</p>
+<div class="inner-page-container">
+  <div class="page-header">
+    <h1>Pedidos</h1>
+  </div>
+  <div class="requests-container">
+    <button (click)="onReturn()" name="returnMyRides">Retornar</button>
+    USUÁRIOS CONFIRMADOS
+    <div class="passengers-list" *ngFor="let passenger of passengers">
+      <h2 name="passengerNameField">{{ passenger.name }}</h2>
+      <button (click)="onCancelPassenger(passenger.cpf)" name="cancelPassenger">
+        Cancelar
+      </button>
+    </div>
+    PEDIDOS PENDENTES
+    <div class="requests-list" *ngFor="let user of requests">
+      <h2 name="requesterNameField">{{ user.name }}</h2>
+      <button (click)="onAcceptRequest(user.cpf)" name="acceptRequest">
+        Aceitar
+      </button>
+      <button (click)="onRejectRequest(user.cpf)" name="rejectRequest">
+        Rejeitar
+      </button>
+    </div>
+  </div>
+</div>

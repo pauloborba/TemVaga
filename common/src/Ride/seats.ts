@@ -1,30 +1,40 @@
 export default class Seats {
-  qttSeatsAvailable: number;
+  qttSeats: string;
   passengers: string[];
   requests: string[];
 
-  constructor(seats: number) {
-    this.qttSeatsAvailable = seats;
+  constructor(seats: string) {
+    this.qttSeats = seats;
     this.passengers = [];
     this.requests = [];
   }
 
-  makeRequest(cpf: string): void {
-    this.requests.push(cpf);
+  createRequest(cpf: string): string {
+    if (Number(this.qttSeats) - this.passengers.length > 0) {
+      this.requests.push(cpf);
+      return cpf;
+    }
+    return '';
   }
 
-  acceptRequest(cpf: string): void {
+  rejectRequest(cpf: string): number {
     const userIndex = this.requests.findIndex(c => c === cpf);
-    if (userIndex === -1) throw new Error();
-    this.passengers.push(cpf);
-
-    this.requests.splice(userIndex, 1);
-    this.qttSeatsAvailable -= 1;
+    if (userIndex !== -1) this.requests.splice(userIndex, 1);
+    return userIndex;
   }
 
-  rejectRequest(cpf: string): void {
+  acceptRequest(cpf: string): number {
     const userIndex = this.requests.findIndex(c => c === cpf);
-    if (userIndex === -1) throw new Error();
-    this.requests.splice(userIndex, 1);
+    if (userIndex !== -1) {
+      this.requests.splice(userIndex, 1);
+      this.passengers.push(cpf);
+    }
+    return userIndex;
+  }
+
+  cancelPassenger(cpf: string): number {
+    const userIndex = this.passengers.findIndex(c => c === cpf);
+    if (userIndex !== -1) this.passengers.splice(userIndex, 1);
+    return userIndex;
   }
 }

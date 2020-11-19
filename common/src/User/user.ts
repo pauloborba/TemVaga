@@ -52,6 +52,26 @@ export default class User {
     this.registeredRides.push(rideId);
   }
 
+  removeRegisteredRide(rideId: string): number {
+    const index: number = this.registeredRides.findIndex(id => id === rideId);
+    if (index !== -1) {
+      this.registeredRides.splice(index, 1);
+    }
+    return index;
+  }
+
+  insertRequestedRide(rideId: string): void {
+    this.requestedRides.push(rideId);
+  }
+
+  removeRequestedRide(rideId: string): number {
+    const index: number = this.requestedRides.findIndex(id => id === rideId);
+    if (index !== -1) {
+      this.requestedRides.splice(index, 1);
+    }
+    return index;
+  }
+
   setCarLicensePlate(licensePlate: string): void {
     this.carLicensePlate = licensePlate;
   }

@@ -7,6 +7,8 @@ import Ride from '../../../../common/src/Ride/ride';
   styleUrls: ['./ride-list.component.css'],
 })
 export class RideListComponent {
+  @Input() isMyRides: boolean = false;
+  @Input() isAvailableRides: boolean = false;
   @Input() rideList: Ride[];
   @Input() showRequests: boolean;
 }

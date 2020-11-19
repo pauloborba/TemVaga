@@ -21,6 +21,7 @@ import { RideService } from '../services/ride.service';
 import { RideComponent } from './ride/ride.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { RequestRideComponent } from './available-rides/request-ride/request-ride.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     RideComponent,
     UserLoginComponent,
     UserInfoComponent,
+    RequestRideComponent,
   ],
   imports: [
     BrowserModule,

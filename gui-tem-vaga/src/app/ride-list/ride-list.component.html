@@ -1,6 +1,8 @@
 <app-ride
   *ngFor="let ride of rideList"
   name="rideList"
+  [isMyRides]="isMyRides"
+  [isAvailableRides]="isAvailableRides"
   [rideInfo]="ride"
   [showRequests]="showRequests"
 ></app-ride>

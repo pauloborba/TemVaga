@@ -1,5 +1,9 @@
 <div class="ride-container">
-  <a href="" class="ride-requests"></a>
+  <!-- prettier-ignore -->
+  <a *ngIf='isMyRides' [routerLink]="['/my-rides', rideInfo.id]" class="ride-requests"></a>
+  <!-- prettier-ignore -->
+  <a *ngIf='isAvailableRides' [routerLink]="['/available-rides', rideInfo.id]" class="ride-requests"></a>
+
   <div class="map-container">
     <p>ROTA</p>
     <table>
@@ -41,7 +45,7 @@
           <tr>
             <td><label>Vagas: </label></td>
             <td name="seatsField">
-              {{ rideInfo.seats.qttSeatsAvailable }}
+              {{ rideInfo.seats.qttSeats }}
             </td>
           </tr>
           <tr *ngIf="showRequests">
