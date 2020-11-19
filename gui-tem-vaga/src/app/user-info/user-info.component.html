@@ -1,0 +1,40 @@
+<p>INFORMAÇÕES DO USUÁRIO</p>
+<table>
+  <tr>
+    <td><label>NOME: </label></td>
+    <td name="nameField">{{ userInfo.name }}</td>
+  </tr>
+  <tr>
+    <td><label>CPF: </label></td>
+    <td name="cpfField">{{ userInfo.cpf }}</td>
+  </tr>
+  <tr>
+    <td><label>TELEFONE: </label></td>
+    <td name="telephoneField">
+      {{ userInfo.telephone }}
+    </td>
+  </tr>
+  <tr>
+    <td><label>EMAIL: </label></td>
+    <td name="emailField">
+      {{ userInfo.email }}
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>NOTA DE MOTORISTA: </label></td>
+    <td name="driverGradeField">
+      {{ userInfo.driverGrade.average }}
+    </td>
+  </tr>
+  <tr>
+    <td><label>NOTA DE PASSAGEIRO: </label></td>
+    <td name="passengerGradeField">
+      {{ userInfo.passengerGrade.average }}
+    </td>
+  </tr>
+  <tr>
+    <td><label>CARRO: </label></td>
+    <td name="carLicensePlateField">{{ userInfo.carLicensePlate }}</td>
+  </tr>
+</table>

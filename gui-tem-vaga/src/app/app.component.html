@@ -1,25 +1,30 @@
-<nav class="navbar">
-  <div class="container">
-    <a class="navbar-brand">Tem Vaga?</a>
+<div class="app-container">
+  <nav class="navbar">
     <ul class="navbar-list" routerLinkActive="active">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/available-rides"
+        <a class="nav-link" name="available-rides" routerLink="/available-rides"
           >Caronas Disponíveis</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/requested-rides"
+        <a class="nav-link" name="requested-rides" routerLink="/requested-rides"
           >Caronas Solicitadas</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/my-rides">Minha Caronas</a>
+        <a class="nav-link" name="my-rides" routerLink="/my-rides"
+          >Minhas Caronas</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/my-profile">Meu Perfil</a>
+        <a class="nav-link" name="my-profile" routerLink="/my-profile"
+          >Meu Perfil</a
+        >
       </li>
     </ul>
+  </nav>
+  <div class="page-container">
+    <router-outlet></router-outlet>
+    <!-- Routing pages will appear here -->
   </div>
-</nav>
-
-<router-outlet></router-outlet>
+</div>

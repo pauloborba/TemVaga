@@ -1,1 +1,59 @@
-<p>user-register works!</p>
+<form
+  [formGroup]="registerFormModel"
+  (ngSubmit)="onSubmitUser(registerFormModel.value)"
+>
+  <div>
+    <label for="name"> Nome: </label>
+    <input id="name" name="nameBox" type="text" formControlName="name" />
+  </div>
+
+  <div>
+    <label for="cpf"> CPF: </label>
+    <input id="cpf" name="cpfBox" type="text" formControlName="cpf" />
+  </div>
+
+  <div>
+    <label for="photo"> Foto: </label>
+    <input
+      id="photo"
+      name="photoBox"
+      type="text"
+      value="Yes"
+      formControlName="photo"
+    />
+  </div>
+
+  <div>
+    <label for="telephone"> Telefone: </label>
+    <input
+      id="telephone"
+      name="telephoneBox"
+      type="text"
+      formControlName="telephone"
+    />
+  </div>
+
+  <div>
+    <label for="email"> Email: </label>
+    <input id="email" name="emailBox" type="email" formControlName="email" />
+  </div>
+
+  <div>
+    <label for="password"> Senha: </label>
+    <input
+      id="password"
+      name="passwordBox"
+      type="password"
+      formControlName="password"
+    />
+  </div>
+
+  <button
+    class="btn-submit-register"
+    name="submitUser"
+    type="submit"
+    [disabled]="!registerFormModel.valid"
+  >
+    Registrar
+  </button>
+</form>

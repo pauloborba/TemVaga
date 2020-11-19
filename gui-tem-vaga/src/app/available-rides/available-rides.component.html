@@ -1,1 +1,11 @@
-<p>available-rides works!</p>
+<div class="inner-page-container">
+  <div class="page-header">
+    <h1>Caronas Disponíveis</h1>
+  </div>
+  <div class="ride-list-container">
+    <app-ride-list
+      [isAvailableRides]="true"
+      [rideList]="availableRides"
+    ></app-ride-list>
+  </div>
+</div>

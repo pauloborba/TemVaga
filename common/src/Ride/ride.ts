@@ -1,38 +1,65 @@
-import {v4 as uuid} from 'uuid';
-import User from '../User/user';
+import { v4 as uuid } from 'uuid';
 import Route from './route';
 import Seats from './seats';
-import { IPlace } from './route';
 
-interface IRide{
-    price: number;
-    places: number;
-    isPrivate: boolean;
-    departureTime: Date;
+interface IRide {
+  departureTime: string;
+  price: string;
+  isPrivate: string;
+  seats: string;
 }
 
-const baseIPlace:IPlace = {street: '', number: 0};
+export default class Ride {
+  id: string;
+  driver: string;
+  departureTime: string;
+  price: string;
+  isPrivate: string;
+  seats: Seats;
+  route: Route;
 
-export default class ride{
-    id: string;
-    driver: User;
-    price: number;
-    isPrivate: boolean;
-    departureTime: Date;
-    route: Route;
-    seats: Seats;
+  constructor(
+    driver: string,
+    { departureTime, price, isPrivate, seats }: IRide,
+    departurePlace: string,
+    arrivalPlace: string
+  ) {
+    this.id = uuid();
+    this.driver = driver;
+    this.departureTime = departureTime;
+    this.price = price;
+    this.isPrivate = isPrivate;
+    this.seats = new Seats(seats);
+    this.route = new Route(departurePlace, arrivalPlace);
+  }
 
-    constructor(driver: User, {price, places, isPrivate, departureTime}: IRide){
-        this.id = uuid();
-        this.driver = driver.clone();
-        this.price = price;
-        this.route = new Route({departurePlace: baseIPlace, arrivalPlace: baseIPlace});
-        this.seats = new Seats(places);
-        this.isPrivate = isPrivate;
-        this.departureTime = departureTime;
-    }
+  changePrivacy() {
+    this.isPrivate === 'Yes'
+      ? (this.isPrivate = 'No')
+      : (this.isPrivate = 'Yes');
+  }
 
-    changePrivacy(){
-        this.isPrivate = !this.isPrivate;
-    }
+  getDeparturePlace(): string {
+    return this.route.getDeparturePlace();
+  }
+
+  getArrivalPlace(): string {
+    return this.route.getArrivalPlace();
+  }
+
+  createRequest(requesterCpf: string): string {
+    return this.seats.createRequest(requesterCpf);
+  }
+
+  rejectRequest(rejectedCpf: string): number {
+    return this.seats.rejectRequest(rejectedCpf);
+  }
+
+  acceptRequest(acceptedCpf: string): number {
+    return this.seats.acceptRequest(acceptedCpf);
+  }
+
+  cancelPassenger(cancelledCpf: string): number {
+    return this.seats.cancelPassenger(cancelledCpf);
+  }
 }

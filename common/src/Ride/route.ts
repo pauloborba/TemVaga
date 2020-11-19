@@ -1,29 +1,34 @@
-export interface IPlace{
-    street: string;
-    number: number;
+interface IRoute {
+  departurePlace: string;
+  arrivalPlace: string;
+  stops: string[];
 }
 
-interface IRoute{
-    departurePlace: IPlace;
-    arrivalPlace: IPlace;
-}
+export default class Route {
+  departurePlace: string;
+  arrivalPlace: string;
+  stops: string[];
 
-export default class Route{
-    departurePlace: IPlace;
-    arrivalPlace: IPlace;
-    stops: IPlace[];
+  constructor(departurePlace: string, arrivalPlace: string) {
+    this.departurePlace = departurePlace;
+    this.arrivalPlace = arrivalPlace;
+    this.stops = [];
+  }
 
-    constructor({departurePlace, arrivalPlace}: IRoute){
-        this.departurePlace = departurePlace;
-        this.arrivalPlace = arrivalPlace;
-    }
+  addStop(stop: string) {
+    this.stops.push(stop);
+  }
 
-    addStop(stop: IPlace){
-        this.stops.push(stop);
-    }
+  removeStop(stop: string) {
+    const stopIndex = this.stops.findIndex(s => s == stop);
+    this.stops.splice(stopIndex, 1);
+  }
 
-    removeStop(stop: IPlace){
-        const stopIndex = this.stops.findIndex(s => s == stop);
-        this.stops.splice(stopIndex, 1);
-    }
+  getDeparturePlace(): string {
+    return this.departurePlace;
+  }
+
+  getArrivalPlace(): string {
+    return this.arrivalPlace;
+  }
 }

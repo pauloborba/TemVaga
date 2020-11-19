@@ -1,1 +1,11 @@
-<p>requested-rides works!</p>
+<div class="inner-page-container">
+  <div class="page-header">
+    <h1>Caronas Solicitadas</h1>
+  </div>
+  <div class="requested-rides-container">
+    <app-ride-list
+      *ngIf="isLoggedIn"
+      [rideList]="requestedRides"
+    ></app-ride-list>
+  </div>
+</div>

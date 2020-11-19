@@ -1,1 +1,72 @@
-<p>my-profile works!</p>
+<div class="inner-page-container">
+  <div class="page-header">
+    <h1>Meu Perfil</h1>
+  </div>
+  <div class="profile-container">
+    <!-- prettier-ignore -->
+    <button
+        class="btn-logout"
+        (click)="logoutUser()"
+        *ngIf="isLoggedIn"
+      >
+        Sair
+      </button>
+    <div
+      class="register-user-container"
+      *ngIf="isRegisteringUser; else showUserInfo"
+    >
+      <button
+        class="btn-cancel-register"
+        (click)="onFinishRegister()"
+        *ngIf="isRegisteringUser"
+      >
+        Cancel
+      </button>
+      <app-user-register
+        (finishRegister)="onFinishRegister()"
+      ></app-user-register>
+    </div>
+    <ng-template #showUserInfo>
+      <div class="user-info-container" *ngIf="isLoggedIn; else showLoginForm">
+        <app-user-info [userInfo]="loggedUser"></app-user-info>
+      </div>
+      <ng-template #showLoginForm>
+        <div class="login-container">
+          <form
+            [formGroup]="loginFormModel"
+            (ngSubmit)="onSubmitLogin(loginFormModel.value)"
+          >
+            <div>
+              <label for="emailLogin"> Email: </label>
+              <input
+                id="emailLogin"
+                name="emailLoginBox"
+                type="email"
+                formControlName="email"
+              />
+            </div>
+            <div>
+              <label for="passwordLogin"> Senha: </label>
+              <input
+                id="passwordLogin"
+                name="passwordLoginBox"
+                type="password"
+                formControlName="password"
+              />
+            </div>
+            <button class="btn-submit-login" name="submitLogin" type="submit">
+              Entrar
+            </button>
+          </form>
+          <button
+            class="btn-register-user"
+            name="registerUser"
+            (click)="onRegister()"
+          >
+            Não tenho cadastro!
+          </button>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

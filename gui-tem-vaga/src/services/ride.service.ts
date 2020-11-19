@@ -12,9 +12,16 @@ export class RideService {
   private baseURL = 'http://localhost:3000/rideApi';
 
   constructor(private http: HttpClient) {}
-
-  create(ride: Ride): Observable<Ride> {
-    return;
+  // prettier-ignore
+  create(ride): Observable<Ride> {
+    return (this.http
+      .post<any>(`${this.baseURL}/ride`, ride, { headers: this.headers })
+      .pipe(retry(2), map((res) => {
+          if (res.success) return JSON.parse(res.ride);
+          return null;
+        })
+      )
+    );
   }
 
   update(ride: Ride): Observable<Ride> {
@@ -22,15 +29,19 @@ export class RideService {
   }
 
   getRide(id: string): Observable<Ride> {
-    return;
+    return this.http.get<Ride>(`${this.baseURL}/ride/${id}`).pipe(retry(2));
   }
 
   getRides(ids: string[]): Observable<Ride[]> {
-    return;
+    return this.http
+      .get<Ride[]>(`${this.baseURL}/ride/some`, {
+        params: { ids: ids },
+      })
+      .pipe(retry(2));
   }
 
   getAllRides(): Observable<Ride[]> {
-    return;
+    return this.http.get<Ride[]>(`${this.baseURL}/ride/all`).pipe(retry(2));
   }
 
   getFilteredRides(comparisonRide: Ride): Observable<Ride[]> {
@@ -41,28 +52,87 @@ export class RideService {
     return;
   }
 
-  createRequest(id: string, requesterCpf: string): Observable<boolean> {
-    return;
+  createRequest(id: string, requesterCpf: string): Observable<string> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/ride/request/create/${id}`,
+        { requesterCpf: requesterCpf },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+          } else {
+            return '';
+          }
+        })
+      );
   }
 
-  cancelRequest(id: string, requesterCpf: string): Observable<boolean> {
-    return;
+  rejectRequest(id: string, rejectedCpf: string): Observable<number> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/ride/request/reject/${id}`,
+        { rejectedCpf: rejectedCpf },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            return res.requestIndex;
+          } else {
+            return '';
+          }
+        })
+      );
   }
 
-  acceptRequest(
-    id: string,
-    ownerCpf: string,
-    acceptedCpf: string
-  ): Observable<boolean> {
-    return;
+  acceptRequest(id: string, acceptedCpf: string): Observable<number> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/ride/request/accept/${id}`,
+        { acceptedCpf: acceptedCpf },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            return res.requestIndex;
+          } else {
+            return '';
+          }
+        })
+      );
   }
 
-  rejectRequest(
-    id: string,
-    ownerCpf: string,
-    rejectedCpf: string
-  ): Observable<boolean> {
-    return;
+  cancelPassenger(id: string, cancelledCpf: string): Observable<number> {
+    return this.http
+      .put<any>(
+        `${this.baseURL}/ride/passenger/cancel/${id}`,
+        { cancelledCpf: cancelledCpf },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        retry(2),
+        map((res) => {
+          if (res.success) {
+            return res.passengerIndex;
+          } else {
+            return '';
+          }
+        })
+      );
   }
 
   createRoute(route: Route): Observable<Route> {

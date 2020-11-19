@@ -1,1 +1,54 @@
-<p>my-rides works!</p>
+<div class="inner-page-container">
+  <div class="page-header">
+    <h1>Minhas Caronas</h1>
+    <button
+      class="btn-register-ride"
+      name="registerRide"
+      (click)="onRegister()"
+    >
+      +
+    </button>
+  </div>
+  <div class="ride-list-container">
+    <!-- prettier-ignore -->
+    <div class="confirmation-message" name="confirmation-message" *ngIf="registerSuccessful">
+      SUA CARONA FOI CADASTRADA COM SUCESSO!
+      <!-- prettier-ignore -->
+      <button (click)="closeConfirmationMessage()" name="closeConfirmationMessage">OK</button>
+    </div>
+
+    <div class="failure-message" name="failure-message" *ngIf="registerFailed">
+      ALGUM ERRO INESPERADO OCORREU DURANTE O CADASTRO! TENTE NOVAMENTE.
+      <!-- prettier-ignore -->
+      <button (click)="closeFailureMessage()" name="closeFailureMessage">OK</button>
+    </div>
+
+    <div class="login-message" name="login-message" *ngIf="toLogin">
+      FAÇA LOGIN ANTES DE CADASTRAR CARONAS!
+      <button (click)="closeLoginMessage()" name="closeLoginMessage">OK</button>
+    </div>
+    <!-- prettier-ignore -->
+    <div class="register-car-message" name="register-car-message" *ngIf="toRegisterCar">
+      É NECESSÁRIO CADASTRAR UM CARRO ANTES DE CADASTRAR CARONAS!
+      <button (click)="closeRegisterCarMessage()" name="confirmRegisterCar">OK</button>
+    </div>
+
+    <div
+      class="register-ride-container"
+      *ngIf="isRegisteringRide; else showRideList"
+    >
+      <app-ride-register
+        (cancelRegister)="onStopRegister()"
+        (finishRegister)="onFinishRegister($event)"
+      ></app-ride-register>
+    </div>
+    <ng-template #showRideList>
+      <app-ride-list
+        *ngIf="isLoggedIn"
+        [isMyRides]="true"
+        [rideList]="myRides"
+        [showRequests]="true"
+      ></app-ride-list>
+    </ng-template>
+  </div>
+</div>
