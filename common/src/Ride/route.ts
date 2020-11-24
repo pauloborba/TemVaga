@@ -1,28 +1,29 @@
-export interface IPlace{
+/**export interface IPlace{
     street: string;
     number: number;
-}
+}**/
 
 interface IRoute{
-    departurePlace: IPlace;
-    arrivalPlace: IPlace;
+    departurePlace: string;
+    arrivalPlace: string;
 }
 
 export default class Route{
-    departurePlace: IPlace;
-    arrivalPlace: IPlace;
-    stops: IPlace[];
+    departurePlace: string;
+    arrivalPlace: string;
+    stops: google.maps.DirectionsWaypoint[] = [];
+    Index: number;
 
     constructor({departurePlace, arrivalPlace}: IRoute){
         this.departurePlace = departurePlace;
         this.arrivalPlace = arrivalPlace;
     }
 
-    addStop(stop: IPlace){
+    addStop(stop: google.maps.DirectionsWaypoint){
         this.stops.push(stop);
     }
 
-    removeStop(stop: IPlace){
+    removeStop(stop: google.maps.DirectionsWaypoint){
         const stopIndex = this.stops.findIndex(s => s == stop);
         this.stops.splice(stopIndex, 1);
     }

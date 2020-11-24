@@ -4,6 +4,7 @@ export default class Car {
   brand: string;
   model: string;
   carSpots: number;
+  ownerCpf: string;
 
   constructor() {
     this.clean();
@@ -15,6 +16,7 @@ export default class Car {
     this.brand = '';
     this.model = '';
     this.carSpots = 0;
+    this.ownerCpf = '';
   }
 
   clone(): Car {
@@ -29,5 +31,6 @@ export default class Car {
     this.brand = from.brand;
     this.model = from.model;
     this.carSpots = from.carSpots;
+    this.ownerCpf = from.ownerCpf;
   }
 }

@@ -5,6 +5,7 @@ export default class RideRegister {
   rides: Ride[] = [];
 
   register(ride: Ride): Ride {
+    this.rides.push(ride);
     return;
   }
 
@@ -52,11 +53,34 @@ export default class RideRegister {
     return;
   }
 
-  createRoute(route: Route): Route {
+  createRoute(id: string, route: Route): Route {
+    var index =this.rides.findIndex(a => a.id == id);
+    this.rides[index].route = route;
+    console.log("feito");
     return;
   }
 
-  updateRoute(route: Route): Route {
+  getRota(id:string): Route{
+    console.log(id);
+    var b = this.rides.findIndex(a => a.id == id);
+    console.log(b);
+    return this.rides[b].route;
+  }
+
+  updateRoute(stop: google.maps.DirectionsWaypoint): Route {
+    return;
+  }
+
+  addStop(id:string,stop:google.maps.DirectionsWaypoint):google.maps.DirectionsWaypoint{
+    var b = this.rides.findIndex(a => a.id == id);
+    this.rides[b].route.stops.push(stop);
+    return;
+  }
+
+  removeStop(stop:string):google.maps.DirectionsWaypoint{
+    //var ridein = this.rides.findIndex(a => a.id == id);
+    const stopin = this.rides[0].route.stops.findIndex(s => s.location == stop);
+    this.rides[0].route.stops.splice(stopin, 1);
     return;
   }
 }

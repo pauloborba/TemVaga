@@ -3,6 +3,7 @@ import { MyRidesComponent } from './my-rides/my-rides.component';
 import { AvailableRidesComponent } from './available-rides/available-rides.component';
 import { RequestedRidesComponent } from './requested-rides/requested-rides.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { RideRegisterComponent } from './ride-register/ride-register.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,12 @@ export const routes: Routes = [
     path: 'my-profile',
     component: MyProfileComponent,
   },
+
+  {
+    path: 'create-ride',
+    component: RideRegisterComponent,
+  },
+
   {
     path: '',
     redirectTo: '/available-rides',

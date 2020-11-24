@@ -1,13 +1,16 @@
 import Ride from '../../../common/src/Ride/ride';
 import RideRegister from '../ride.register';
 import express = require('express');
+import Route from '../../../common/src/Ride/route';
 
 const rideRoutes = express.Router();
 
 const rideRegister: RideRegister = new RideRegister();
 
 rideRoutes.post('/ride', (req: express.Request, res: express.Response) => {
-  // rideRegister.register(ride);
+  var ride = <Ride>req.body; 
+  rideRegister.register(ride);
+  res.send({"success":"batata"});
 });
 
 rideRoutes.put('/ride', (req: express.Request, res: express.Response) => {
@@ -71,14 +74,48 @@ rideRoutes.put(
 rideRoutes.put(
   '/ride/route/create/:id',
   (req: express.Request, res: express.Response) => {
-    // rideRegister.createRoute(Route)
+    const { id } = req.params;
+    var route : Route = <Route>req.body;
+    rideRegister.createRoute(id,route);
+    res.send({"success":"ok"});
+  }
+);
+
+rideRoutes.get(
+  '/ride/route/get/:id',
+  (req: express.Request, res: express.Response) => {
+    console.log("echoget");
+    const { id } = req.params;
+    console.log(id);
+    res.send(JSON.stringify(rideRegister.getRota(id)));
   }
 );
 
 rideRoutes.put(
   '/ride/route/update/:id',
   (req: express.Request, res: express.Response) => {
-    // rideRegister.updateRoute(Route)
+    //var stop = <google.maps.DirectionsWaypoint>req.body; 
+    //rideRegister.updateRoute(stop);
+  }
+);
+
+rideRoutes.delete(
+  '/ride/route/delete/:stop',
+  (req: express.Request, res: express.Response) => {
+    const {stop} = req.params;
+    rideRegister.removeStop(stop);
+    res.send({"success":"ok"});
+  }
+);
+
+rideRoutes.put(
+  '/ride/route/stop/:id',
+  (req: express.Request, res: express.Response) => {
+    var stop = <google.maps.DirectionsWaypoint>req.body;
+    const {id} = req.params; 
+    console.log(id);
+    rideRegister.addStop(id,stop);
+    res.send({"success":"ok"});
   }
 );
 

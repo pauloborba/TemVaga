@@ -8,7 +8,10 @@ export default class User {
   email: string;
   password: string;
   carLicensePlate: string;
-  grade: Grade;
+  driverGrade: Grade;
+  passengerGrade: Grade;
+  registeredRides: string[];
+  requestedRides: string[];
 
   constructor() {
     this.clean();
@@ -22,8 +25,11 @@ export default class User {
     this.email = '';
     this.password = '';
     this.carLicensePlate = '';
-    // Base grade for new user
-    this.grade = new Grade({ average: 5, evaluationQtt: 1 });
+    // Base grades for new user
+    this.driverGrade = new Grade({ average: 5, evaluationQtt: 1 });
+    this.passengerGrade = new Grade({ average: 5, evaluationQtt: 1 });
+    this.registeredRides = [];
+    this.requestedRides = [];
   }
 
   clone(): User {
@@ -40,11 +46,13 @@ export default class User {
     this.email = from.email;
     this.password = from.password;
     this.carLicensePlate = from.carLicensePlate;
-    this.grade = new Grade(from.grade);
+    this.driverGrade = new Grade(from.driverGrade);
+    this.passengerGrade = new Grade(from.passengerGrade);
+    this.registeredRides = [...from.registeredRides];
+    this.requestedRides = [...from.requestedRides];
   }
-
+  // TODO: Implement evaluation for passengerGrade
   evaluate(evaluationValue: number): number {
-    this.grade.incrementGrade(evaluationValue);
-    return this.grade.average;
+    return this.driverGrade.incrementGrade(evaluationValue);
   }
 }
